@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu de Restaurante</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"> <!-- FontAwesome -->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-image: url('https://i.ibb.co/zJ1cCsw/5.png'); /* Adicionando a imagem de fundo */
+            background-size: cover; /* Ajusta a imagem para cobrir toda a tela */
+            background-position: center; /* Centraliza a imagem de fundo */
+            background-repeat: no-repeat; /* Evita a repetição da imagem */
+        }
+        header {
+            background-color: rgba(51, 51, 51, 0.8); /* Cor de fundo com transparência */
+            color: white;
+            padding: 10px;
+            text-align: center;
+        }
+        .menu {
+            display: flex;
+            flex-wrap: wrap;
+            margin: 20px;
+            justify-content: space-around;
+        }
+        .category {
+            background-color: white;
+            padding: 20px;
+            margin: 10px;
+            width: 250px; /* Reduzir a largura do quadrado */
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            font-size: 0.9em;
+        }
+        .category img {
+            width: 100%;
+            height: 150px; /* Reduzir a altura da imagem */
+            object-fit: cover;
+            border-radius: 5px;
+        }
+        .category h3 {
+            margin-top: 15px;
+        }
+        .items {
+            list-style: none;
+            padding: 0;
+        }
+        .items li {
+            margin: 10px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-direction: column;
+            text-align: center;
+        }
+        .ingredients {
+            font-size: 0.8em;
+            color: #555;
+            margin-top: 5px;
+        }
+
+        /* Estilos para o carrinho */
+        .cart {
+            position: fixed;
+            right: 20px;
+            top: 20px;
+            background-color: #fff;
+            padding: 10px;
+            border-radius: 50%;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            width: 40px; /* Tamanho pequeno do carrinho */
+            height: 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            font-size: 16px; /* Ícone maior */
+            z-index: 1000;
+        }
+
+        .cart i {
+            color: #333;
+        }
+
+        .cart-counter {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            background-color: red;
+            color: white;
+            font-size: 14px;
+            font-weight: bold;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1001;
+        }
+
+        /* Carrinho em posição centralizada */
+        .cart-content {
+            display: none; /* Carrinho oculto por padrão */
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            width: 300px;
+            max-height: 400px;
+            overflow-y: auto;
+            z-index: 999;
+            cursor: move; /* Cursor para indicar que pode ser movido */
+        }
+
+        .cart-content h3 {
+            margin-top: 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .cart-content ul {
+            padding: 0;
+            list-style-type: none;
+        }
+
+        .cart-content ul li {
+            margin-bottom: 10px;
+        }
+
+        .remove {
+            background-color: red;
+            color: white;
+            padding: 5px;
+            border: none;
+            cursor: pointer;
+        }
+
+        .cart-content p {
+            font-weight: bold;
+        }
+
+        /* Botão de fechar */
+        .close-btn {
+            font-size: 20px;
+            cursor: pointer;
+            color: #333;
+            padding: 5px;
+        }
+
+        /* Estilo do botão de finalizar pedido */
+        .finish-order-btn {
+            background-color: #28a745;
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+            border: none;
+            font-size: 16px;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        .finish-order-btn:hover {
+            background-color: #218838;
+        }
+
+        /* Estilo para o campo de nome */
+        .name-input {
+            margin-bottom: 10px;
+            padding: 8px;
+            width: 100%;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Produtos</h1>
+    </header>
+
+    <div class="menu" id="menu">
+        <!-- O conteúdo do menu será inserido aqui -->
+    </div>
+
+    <!-- Ícone do Carrinho -->
+    <div class="cart" onclick="toggleCart()">
+        <i class="fas fa-shopping-cart"></i>
+        <div class="cart-counter" id="cart-counter">0</div> <!-- Contador de itens -->
+    </div>
+
+    <!-- Conteúdo do Carrinho -->
+    <div class="cart-content" id="cart-content">
+        <h3>
+            Carrinho 
+            <span class="close-btn" onclick="toggleCart()">X</span> <!-- Botão de fechar -->
+        </h3>
+        <ul id="cart-items"></ul>
+        <p id="total-items">Total de itens: 0</p>
+        <p id="total-price">Total a pagar: R$ 0.00</p>
+
+        <!-- Campo para o nome do cliente -->
+        <input type="text" id="customer-name" class="name-input" placeholder="Digite seu nome" />
+
+        <button class="finish-order-btn" id="finish-order-btn" onclick="finishOrder()">Finalizar Pedido</button>
+    </div>
+
+    <script>
+        const menuItems = [
+            // Sanduíches
+            { id: 1, name: "Ovo Simples", price: 4.00, category: "Sanduíches", ingredients: ["Pão", "Ovo", "Alface", "Tomate"] },
+            { id: 2, name: "Queijo Simples", price: 3.50, category: "Sanduíches", ingredients: ["Pão", "Queijo", "Alface", "Tomate"] },
+            { id: 3, name: "Hamburguer", price: 5.00, category: "Sanduíches", ingredients: ["Pão", "Queijo", "Presunto", "Alface", "Tomate"] },
+            { id: 4, name: "Frango", price: 5.00, category: "Sanduíches", ingredients: ["Pão", "Frango", "Alface", "Tomate"] },
+            { id: 5, name: "Misto Quente", price: 4.00, category: "Sanduíches", ingredients: ["Pão", "Queijo", "Presunto", "Alface", "Tomate"] },
+            { id: 6, name: "Frango Com Catupiry", price: 6.00, category: "Sanduíches", ingredients: ["Pão", "Frango", "Catupiry", "Alface", "Tomate"] },
+            { id: 7, name: "Americano", price: 7.00, category: "Sanduíches", ingredients: ["Pão", "Carne", "Queijo", "Presunto", "Alface", "Tomate"] },
+            { id: 8, name: "Russano", price: 7.00, category: "Sanduíches", ingredients: ["Pão", "Carne", "Frango", "Queijo", "Ovo", "Alface", "Tomate"] },
+            { id: 9, name: "Baurú", price: 8.00, category: "Sanduíches", ingredients: ["Pão", "Carne", "Queijo", "Ovo", "Presunto", "Alface", "Tomate"] },
+            { id: 10, name: "X-Tudo", price: 14.00, category: "Sanduíches", ingredients: ["Pão", "Carne", "Queijo", "Presunto","Frango","Calabresa", "Ovo", "Alface", "Tomate"] },
+            { id: 11, name: "Americano", price: 7.00, category: "Sanduíches", ingredients: ["Pão", "Carne", "Queijo", "Presunto", "Alface", "Tomate"] },
+            { id: 12, name: "X-Calabresa", price: 9.00, category: "Sanduíches", ingredients: ["Pão", "Queijo", "Presunto", "Calabresa", "Alface", "Tomate"] },
+            { id: 13, name: "X-Burguer", price: 5.00, category: "Sanduíches", ingredients: ["Pão", "Queijo", "Alface", "Tomate"] },
+            { id: 14, name: "X-Egg", price: 6.00, category: "Sanduíches", ingredients: ["Pão", "Carne", "Ovo", "Alface", "Tomate"] },
+            { id: 15, name: "X-Egg Salada", price: 7.00, category: "Sanduíches", ingredients: ["Pão", "Carne", "Queijo", "Ovo", "Alface", "Tomate"] },
+            { id: 16, name: "X-Frango", price: 7.00, category: "Sanduíches", ingredients: ["Pão", "Frango", "Queijo", "Alface", "Tomate"] },
+            { id: 17, name: "Especial", price: 12.00, category: "Sanduíches", ingredients: ["Pão", "2 Carnes", "2 Queijos", "Presunto", "Alface", "Tomate"] },
+            { id: 18, name: "X-R Calabresa", price: 12.00, category: "Sanduíches", ingredients: ["Pão", "2 Carnes", "2 Queijos", "Presunto", "Calabresa", "Alface", "Tomate"] },
+
+            //Hot-Dog
+
+            { id: 19, name: "Simples", price: 3.00, category: "Sanduíches", ingredients: ["Pão", "Carne", "Salsicha", "Batata Palha"] },
+            { id: 20, name: "Completo", price: 5.00, category: "Sanduíches", ingredients: ["Pão", "Carne", "Salsicha", "Batata Palha", "Creme de Galinha", "Milho", "Ervilha", "Cheiro Verde", "Batata Palha"] },
+            
+            // Mini Pizzas
+            { id: 21, name: "Mini Pizza Queijo", price: 5.00, category: "Mini Pizzas", ingredients: ["Queijo", "Massa de Pizza"] },
+            { id: 22, name: "Mini Pizza Calabresa", price: 5.00, category: "Mini Pizzas", ingredients: ["Calabresa", "Massa de Pizza"] },
+            { id: 23, name: "Mini Pizza Mista", price: 5.00, category: "Mini Pizzas", ingredients: ["Queijo","Presunto", "Massa de Pizza"] },
+            { id: 24, name: "Mini Pizza Calabresa", price: 5.00, category: "Mini Pizzas", ingredients: ["Frango", "Massa de Pizza"] },
+            { id: 25, name: "Mini Pizza Calabresa", price: 5.00, category: "Mini Pizzas", ingredients: ["Escolha 3 Sabores (Queijo,Calabresa,Frango,Presunto)", "Massa de Pizza"], observation:"" },
+
+            // Sopas e Cremes
+            { id: 26, name: "Sopa 400ml", price: 6.00, category: "Sopas e Cremes", ingredients: ["Caldo", "Legumes"] },
+            { id: 27, name: "Sopa 500ml", price: 7.00, category: "Sopas e Cremes", ingredients: ["Caldo", "Legumes"] },
+            { id: 28, name: "Creme de Galinha Pequeno", price: 4.00, category: "Sopas e Cremes", ingredients: ["Frango", "Creme"] },
+            { id: 29, name: "Creme de Galinha Médio", price: 6.00, category: "Sopas e Cremes", ingredients: ["Frango", "Creme"] },
+            { id: 30, name: "Creme de Galinha Grande", price: 8.00, category: "Sopas e Cremes", ingredients: ["Frango", "Creme"] },
+
+            // Bebidas
+            { id: 31, name: "Cerveja 300ml", price: 12.00, category: "Bebidas", ingredients: ["Cerveja"] },
+            { id: 32, name: "Coca Cola 2L", price: 5.00, category: "Bebidas", ingredients: ["Coca Cola"] },
+            { id: 33, name: "Coca 600ml", price: 7.00, category: "Bebidas", ingredients: ["Coca Cola"] },
+            { id: 34, name: "Água S/Gás 500ml", price: 3.00, category: "Bebidas", ingredients: ["Água"] },
+            { id: 35, name: "Água C/Gás 500ml", price: 2.00, category: "Bebidas", ingredients: ["Água com gás"] },
+            { id: 36, name: "Coca Lata", price: 4.00, category: "Bebidas", ingredients: ["Coca Cola"] },
+            { id: 37, name: "Guaraná 1L", price: 7.00, category: "Bebidas", ingredients: ["Guaraná"] },
+            { id: 38, name: "Cajuína 1L", price: 8.00, category: "Bebidas", ingredients: ["Cajuína"] },
+            { id: 39, name: "Guaraná 2L", price: 10.00, category: "Bebidas", ingredients: ["Guaraná"] },
+            { id: 40, name: "Pepsi 2L", price: 10.00, category: "Bebidas", ingredients: ["Pepsi"] },
+            { id: 41, name: "Sukita 2L", price: 4.00, category: "Bebidas", ingredients: ["Sukita"] },
+            { id: 42, name: "Cajuína Garrafa", price: 4.00, category: "Bebidas", ingredients: ["Cajuína"] },
+            { id: 43, name: "Pepsi 1L", price: 7.00, category: "Bebidas", ingredients: ["Pepsi"] },
+            { id: 44, name: "Cajuína Pitchukinha", price: 10.00, category: "Bebidas", ingredients: ["Cajuína"] },
+            { id: 45, name: "Fanta Uva Pitchukinha", price: 3.00, category: "Bebidas", ingredients: ["Fanta Uva"] },
+
+            // Menu Sucos
+            { id: 46, name: "Cajá Umbu", price: 4.00, category: "Sucos" },
+            { id: 47, name: "Goiaba", price: 4.00, category: "Sucos" },
+            { id: 48, name: "Acerola", price: 4.00, category: "Sucos" },
+            { id: 49, name: "Abacaxi", price: 4.00, category: "Sucos" },
+            { id: 50, name: "Graviola", price: 4.00, category: "Sucos" },
+            { id: 51, name: "Maracujá", price: 4.00, category: "Sucos" },
+
+            // Menu Vitaminas
+            { id: 52, name: "Maracujá", price: 4.00, category: "Sucos" },
+            { id: 53, name: "Abacaxi", price: 5.00, category: "Vitaminas" },
+            { id: 54, name: "Acerola", price: 5.00, category: "Vitaminas" },
+            { id: 55, name: "Cajá", price: 7.00, category: "Vitaminas" },
+            { id: 56, name: "Cajá Umbu", price: 6.00, category: "Vitaminas" },
+            { id: 57, name: "Goiaba", price: 5.00, category: "Vitaminas" },
+            { id: 58, name: "Graviola", price: 7.00, category: "Vitaminas" },
+            { id: 59, name: "Maracujá", price: 7.00, category: "Vitaminas" },
+        ];
+
+        let cart = [];
+
+        // Função para exibir o menu
+        function displayMenu() {
+            const menuContainer = document.getElementById('menu');
+            menuContainer.innerHTML = ''; // Limpar o menu antes de renderizar
+
+            menuItems.forEach(item => {
+                const itemElement = document.createElement('div');
+                itemElement.classList.add('category');
+                itemElement.innerHTML = `
+                    <img src="https://via.placeholder.com/150" alt="${item.name}" />
+                    <h3>${item.name}</h3>
+                    <p>R$ ${item.price.toFixed(2)}</p>
+                    <p class="ingredients">${item.ingredients.join(', ')}</p>
+                    <div class="item-controls">
+                        <button onclick="changeQuantity(${item.id}, -1)">-</button>
+                        <span id="quantity-${item.id}" class="quantity">0</span>
+                        <button onclick="changeQuantity(${item.id}, 1)">+</button>
+                    </div>
+                `;
+                menuContainer.appendChild(itemElement);
+            });
+        }
+
+        // Função para alterar a quantidade dos itens no carrinho
+        function changeQuantity(itemId, change) {
+            let item = cart.find(item => item.id === itemId);
+            const quantityElement = document.getElementById(`quantity-${itemId}`);
+
+            if (!item) {
+                item = { id: itemId, quantity: 0, price: menuItems.find(i => i.id === itemId).price };
+                cart.push(item);
+            }
+
+            item.quantity += change;
+
+            if (item.quantity < 0) item.quantity = 0; // Não permitir quantidades negativas
+            if (item.quantity > 10) item.quantity = 10; // Limitar quantidade máxima
+
+            quantityElement.textContent = item.quantity;
+            updateCart();
+        }
+
+        // Função para atualizar o carrinho
+        function updateCart() {
+            const cartItemsElement = document.getElementById('cart-items');
+            const cartCounter = document.getElementById('cart-counter');
+            const totalItems = document.getElementById('total-items');
+            const totalPrice = document.getElementById('total-price');
+
+            cartItemsElement.innerHTML = '';
+            let total = 0;
+            let itemCount = 0;
+
+            cart.forEach(item => {
+                if (item.quantity > 0) {
+                    total += item.quantity * item.price;
+                    itemCount += item.quantity;
+                    const listItem = document.createElement('li');
+                    listItem.innerHTML = `${menuItems.find(i => i.id === item.id).name} x${item.quantity} <button class="remove" onclick="removeItem(${item.id})">Remover</button>`;
+                    cartItemsElement.appendChild(listItem);
+                }
+            });
+
+            totalItems.textContent = `Total de itens: ${itemCount}`;
+            totalPrice.textContent = `Total a pagar: R$ ${total.toFixed(2)}`;
+            cartCounter.textContent = itemCount;
+        }
+
+        // Função para remover um item do carrinho
+        function removeItem(itemId) {
+            const itemIndex = cart.findIndex(item => item.id === itemId);
+            if (itemIndex > -1) {
+                cart.splice(itemIndex, 1);
+                updateCart();
+            }
+        }
+
+        // Função para alternar a visibilidade do carrinho
+        function toggleCart() {
+            const cartContent = document.getElementById('cart-content');
+            cartContent.style.display = cartContent.style.display === 'none' || cartContent.style.display === '' ? 'block' : 'none';
+        }
+
+        // Função para finalizar o pedido
+function finishOrder() {
+    const customerName = document.getElementById('customer-name').value;
+    if (customerName && cart.length > 0) {
+        let orderDetails = `*Comprovante de Pedido* 🛒\n\n`;
+        orderDetails += `*Cliente:* ${customerName}\n\n`;
+        orderDetails += `*Itens do Pedido:*\n`;
+
+        cart.forEach(item => {
+            if (item.quantity > 0) {
+                const itemName = menuItems.find(i => i.id === item.id).name;
+                orderDetails += `- ${itemName} x${item.quantity} - R$ ${(item.price * item.quantity).toFixed(2)}\n`;
+            }
+        });
+
+        const total = cart.reduce((sum, item) => sum + item.quantity * item.price, 0);
+        orderDetails += `\n*Total: R$ ${total.toFixed(2)}*\n`;
+
+        const whatsappUrl = `https://wa.me/558892787665?text=${encodeURIComponent(orderDetails)}`;
+        window.open(whatsappUrl, '_blank');
+        alert("Pedido finalizado! Redirecionando para o WhatsApp...");
+        cart = []; // Clear the cart after the order is sent
+        updateCart(); // Update cart UI
+    } else {
+        alert("Por favor, insira seu nome e adicione itens ao carrinho.");
+    }
+}
+
+
+        // Chama a função para exibir o menu quando a página carregar
+        window.onload = displayMenu;
+    </script>
+</body>
+</html>
