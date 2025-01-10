@@ -1,0 +1,77 @@
+ <script>
+        // Itens do menu (com categoria, imagem representativa e ingredientes)
+        const menuItems = [
+            // Sanduíches
+            { id: 1, name: "Ovo Simples", price: 4.00, category: "Sanduíches", ingredients: ["Pão", "Ovo", "Alface", "Tomate"] },
+            { id: 2, name: "Queijo Simples", price: 3.50, category: "Sanduíches", ingredients: ["Pão", "Queijo", "Alface", "Tomate"] },
+            { id: 3, name: "Hamburguer", price: 5.00, category: "Sanduíches", ingredients: ["Pão", "Queijo", "Presunto", "Alface", "Tomate"] },
+            { id: 4, name: "Frango", price: 5.00, category: "Sanduíches", ingredients: ["Pão", "Frango", "Alface", "Tomate"] },
+            { id: 5, name: "Misto Quente", price: 4.00, category: "Sanduíches", ingredients: ["Pão", "Queijo", "Presunto", "Alface", "Tomate"] },
+            { id: 6, name: "Frango Com Catupiry", price: 6.00, category: "Sanduíches", ingredients: ["Pão", "Frango", "Catupiry", "Alface", "Tomate"] },
+            { id: 7, name: "Americano", price: 7.00, category: "Sanduíches", ingredients: ["Pão", "Carne", "Queijo", "Presunto", "Alface", "Tomate"] },
+            { id: 8, name: "Russano", price: 7.00, category: "Sanduíches", ingredients: ["Pão", "Carne", "Frango", "Queijo", "Ovo", "Alface", "Tomate"] },
+            { id: 9, name: "Baurú", price: 8.00, category: "Sanduíches", ingredients: ["Pão", "Carne", "Queijo", "Ovo", "Presunto", "Alface", "Tomate"] },
+            { id: 10, name: "X-Tudo", price: 14.00, category: "Sanduíches", ingredients: ["Pão", "Carne", "Queijo", "Presunto","Frango","Calabresa", "Ovo", "Alface", "Tomate"] },
+            { id: 11, name: "Americano", price: 7.00, category: "Sanduíches", ingredients: ["Pão", "Carne", "Queijo", "Presunto", "Alface", "Tomate"] },
+            { id: 12, name: "X-Calabresa", price: 9.00, category: "Sanduíches", ingredients: ["Pão", "Queijo", "Presunto", "Calabresa", "Alface", "Tomate"] },
+            { id: 13, name: "X-Burguer", price: 5.00, category: "Sanduíches", ingredients: ["Pão", "Queijo", "Alface", "Tomate"] },
+            { id: 14, name: "X-Egg", price: 6.00, category: "Sanduíches", ingredients: ["Pão", "Carne", "Ovo", "Alface", "Tomate"] },
+            { id: 15, name: "X-Egg Salada", price: 7.00, category: "Sanduíches", ingredients: ["Pão", "Carne", "Queijo", "Ovo", "Alface", "Tomate"] },
+            { id: 16, name: "X-Frango", price: 7.00, category: "Sanduíches", ingredients: ["Pão", "Frango", "Queijo", "Alface", "Tomate"] },
+            { id: 17, name: "Especial", price: 12.00, category: "Sanduíches", ingredients: ["Pão", "2 Carnes", "2 Queijos", "Presunto", "Alface", "Tomate"] },
+            { id: 18, name: "X-R Calabresa", price: 12.00, category: "Sanduíches", ingredients: ["Pão", "2 Carnes", "2 Queijos", "Presunto", "Calabresa", "Alface", "Tomate"] },
+
+            //Hot-Dog
+
+            { id: 19, name: "Simples", price: 3.00, category: "Sanduíches", ingredients: ["Pão", "Carne", "Salsicha", "Batata Palha"] },
+            { id: 20, name: "Completo", price: 5.00, category: "Sanduíches", ingredients: ["Pão", "Carne", "Salsicha", "Batata Palha", "Creme de Galinha", "Milho", "Ervilha", "Cheiro Verde", "Batata Palha"] },
+            
+            // Mini Pizzas
+            { id: 21, name: "Mini Pizza Queijo", price: 5.00, category: "Mini Pizzas", ingredients: ["Queijo", "Massa de Pizza"] },
+            { id: 22, name: "Mini Pizza Calabresa", price: 5.00, category: "Mini Pizzas", ingredients: ["Calabresa", "Massa de Pizza"] },
+            { id: 23, name: "Mini Pizza Mista", price: 5.00, category: "Mini Pizzas", ingredients: ["Queijo","Presunto", "Massa de Pizza"] },
+            { id: 24, name: "Mini Pizza Calabresa", price: 5.00, category: "Mini Pizzas", ingredients: ["Frango", "Massa de Pizza"] },
+            { id: 25, name: "Mini Pizza Calabresa", price: 5.00, category: "Mini Pizzas", ingredients: ["Escolha 3 Sabores (Queijo,Calabresa,Frango,Presunto)", "Massa de Pizza"], observation:"" },
+
+            // Sopas e Cremes
+            { id: 26, name: "Sopa 400ml", price: 6.00, category: "Sopas e Cremes", ingredients: ["Caldo", "Legumes"] },
+            { id: 27, name: "Sopa 500ml", price: 7.00, category: "Sopas e Cremes", ingredients: ["Caldo", "Legumes"] },
+            { id: 28, name: "Creme de Galinha Pequeno", price: 4.00, category: "Sopas e Cremes", ingredients: ["Frango", "Creme"] },
+            { id: 29, name: "Creme de Galinha Médio", price: 6.00, category: "Sopas e Cremes", ingredients: ["Frango", "Creme"] },
+            { id: 30, name: "Creme de Galinha Grande", price: 8.00, category: "Sopas e Cremes", ingredients: ["Frango", "Creme"] },
+
+            // Bebidas
+            { id: 31, name: "Cerveja 300ml", price: 12.00, category: "Bebidas", ingredients: ["Cerveja"] },
+            { id: 32, name: "Coca Cola 2L", price: 5.00, category: "Bebidas", ingredients: ["Coca Cola"] },
+            { id: 33, name: "Coca 600ml", price: 7.00, category: "Bebidas", ingredients: ["Coca Cola"] },
+            { id: 34, name: "Água S/Gás 500ml", price: 3.00, category: "Bebidas", ingredients: ["Água"] },
+            { id: 35, name: "Água C/Gás 500ml", price: 2.00, category: "Bebidas", ingredients: ["Água com gás"] },
+            { id: 36, name: "Coca Lata", price: 4.00, category: "Bebidas", ingredients: ["Coca Cola"] },
+            { id: 37, name: "Guaraná 1L", price: 7.00, category: "Bebidas", ingredients: ["Guaraná"] },
+            { id: 38, name: "Cajuína 1L", price: 8.00, category: "Bebidas", ingredients: ["Cajuína"] },
+            { id: 39, name: "Guaraná 2L", price: 10.00, category: "Bebidas", ingredients: ["Guaraná"] },
+            { id: 40, name: "Pepsi 2L", price: 10.00, category: "Bebidas", ingredients: ["Pepsi"] },
+            { id: 41, name: "Sukita 2L", price: 4.00, category: "Bebidas", ingredients: ["Sukita"] },
+            { id: 42, name: "Cajuína Garrafa", price: 4.00, category: "Bebidas", ingredients: ["Cajuína"] },
+            { id: 43, name: "Pepsi 1L", price: 7.00, category: "Bebidas", ingredients: ["Pepsi"] },
+            { id: 44, name: "Cajuína Pitchukinha", price: 10.00, category: "Bebidas", ingredients: ["Cajuína"] },
+            { id: 45, name: "Fanta Uva Pitchukinha", price: 3.00, category: "Bebidas", ingredients: ["Fanta Uva"] },
+
+            // Menu Sucos
+            { id: 46, name: "Cajá Umbu", price: 4.00, category: "Sucos" },
+            { id: 47, name: "Goiaba", price: 4.00, category: "Sucos" },
+            { id: 48, name: "Acerola", price: 4.00, category: "Sucos" },
+            { id: 49, name: "Abacaxi", price: 4.00, category: "Sucos" },
+            { id: 50, name: "Graviola", price: 4.00, category: "Sucos" },
+            { id: 51, name: "Maracujá", price: 4.00, category: "Sucos" },
+
+            // Menu Vitaminas
+            { id: 52, name: "Maracujá", price: 4.00, category: "Sucos" },
+            { id: 53, name: "Abacaxi", price: 5.00, category: "Vitaminas" },
+            { id: 54, name: "Acerola", price: 5.00, category: "Vitaminas" },
+            { id: 55, name: "Cajá", price: 7.00, category: "Vitaminas" },
+            { id: 56, name: "Cajá Umbu", price: 6.00, category: "Vitaminas" },
+            { id: 57, name: "Goiaba", price: 5.00, category: "Vitaminas" },
+            { id: 58, name: "Graviola", price: 7.00, category: "Vitaminas" },
+            { id: 59, name: "Maracujá", price: 7.00, category: "Vitaminas" },
+        ];
