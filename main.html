@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bem-vindo à Lanchonete</title>
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #FF5722;
+            background-image: url('https://i.ibb.co/zJ1cCsw/5.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            flex-direction: column;
+        }
+
+        /* Menu de Navegação */
+        .navbar {
+            background-color: rgba(0, 0, 0, 0.7); /* Fundo escuro para maior contraste */
+            padding: 15px 20px;
+            display: flex;
+            justify-content: center; /* Centraliza os itens do menu */
+            align-items: center;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+        }
+
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            font-size: 18px;
+            text-transform: uppercase;
+            margin: 0 20px;
+            padding: 10px 20px;
+            border-radius: 5px;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+
+        /* Efeitos interativos para os botões do menu */
+        .navbar a:hover {
+            background-color: #FF9800; /* Cor de fundo ao passar o mouse */
+            transform: scale(1.1); /* Efeito de aumento ao passar o mouse */
+        }
+
+        /* Estilo do corpo */
+        .home-container {
+            text-align: center;
+            padding-top: 100px; /* Ajustado para maior espaço entre menu e conteúdo */
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            background: rgba(0, 0, 0, 0.5); /* Fundo escuro para contraste */
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+            padding-bottom: 50px;
+            width: 100%;
+        }
+
+        .home-container h1 {
+            margin-top: 0;
+            font-size: 4em; /* Tamanho grande para chamar atenção */
+            color: #FFEB3B; /* Cor amarela para contraste */
+            text-shadow: 4px 4px 10px rgba(0, 0, 0, 0.8); /* Sombra mais forte */
+            letter-spacing: 5px; /* Espaçamento entre as letras */
+            text-transform: uppercase;
+            font-family: 'Arial', sans-serif; /* Fonte mais chamativa */
+            font-weight: bold;
+            margin-bottom: 40px; /* Espaço entre o título e o ícone */
+        }
+
+        /* Estilo do ícone de cardápio */
+        .menu-icon {
+            width: 150px;
+            height: auto;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .menu-icon:hover {
+            transform: scale(1.1); /* Efeito de aumento ao passar o mouse */
+        }
+
+        /* Mensagem abaixo do ícone de cardápio */
+        .message {
+            margin-top: 20px;
+            font-size: 1.5em;
+            color: #FFEB3B;
+            text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.7);
+            font-weight: bold;
+            letter-spacing: 2px;
+            animation: fadeIn 2s ease-out;
+        }
+
+        /* Animação de aparecimento suave da mensagem */
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Botão de Voltar */
+        .back-btn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background-color: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 10px 20px;
+            font-size: 18px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            z-index: 1100;
+        }
+
+        .back-btn:hover {
+            background-color: #FF9800; /* Cor de hover do botão */
+        }
+
+        /* Responsividade para dispositivos móveis */
+        @media (max-width: 768px) {
+            .navbar a {
+                font-size: 16px; /* Ajuste do tamanho da fonte no menu */
+            }
+
+            .home-container h1 {
+                font-size: 3em; /* Tamanho do título reduzido em telas menores */
+            }
+
+            .menu-icon {
+                width: 120px;
+            }
+
+            .message {
+                font-size: 1.2em;
+            }
+
+            .back-btn {
+                font-size: 16px;
+                padding: 10px 15px;
+            }
+        }
+
+        /* Responsividade para telas muito pequenas */
+        @media (max-width: 480px) {
+            .navbar a {
+                font-size: 14px; /* Ajuste para telas muito pequenas */
+            }
+
+            .home-container h1 {
+                font-size: 2.5em; /* Reduzindo ainda mais o título */
+            }
+
+            .menu-icon {
+                width: 100px;
+            }
+
+            .message {
+                font-size: 1.1em;
+            }
+
+            .back-btn {
+                font-size: 14px;
+                padding: 8px 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Menu de Navegação -->
+    <div class="navbar">
+        <a href="index.html" class="navbar-button">Home</a>
+        <a href="contato.html" class="navbar-button">Contato</a> <!-- Atualizado para direcionar à página de Contato -->
+    </div>
+
+    <!-- Corpo da Página -->
+    <div class="home-container">
+        <h1>Lanchonete Nosso Canto</h1>
+        <a href="cardapio.html">
+            <img src="https://i.ibb.co/zJ1cCsw/menu-icon.png" alt="Ícone Cardápio" class="menu-icon">
+        </a>
+        <div class="message">
+            Hmm..., bateu a fome né? Vamos realizar seu pedido?
+        </div>
+    </div>
+
+    <!-- Botão de Voltar -->
+    <button class="back-btn" onclick="window.history.back();">Voltar</button>
+
+</body>
+</html>
