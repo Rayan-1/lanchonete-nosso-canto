@@ -240,7 +240,7 @@
     </div>
 
     <script>
-        const menuItems = [
+        let menuItems = [
         { "id": 1, "name": "Ovo Simples", "price": 4.00, "category": "Sanduíches", "ingredients": ["Pão", "Ovo", "Alface", "Tomate"] },
         { "id": 2, "name": "Queijo Simples", "price": 3.50, "category": "Sanduíches", "ingredients": ["Pão", "Queijo", "Alface", "Tomate"] },
         { "id": 3, "name": "Hamburguer", "price": 5.00, "category": "Sanduíches", "ingredients": ["Pão", "Queijo", "Presunto", "Alface", "Tomate"] },
@@ -300,8 +300,7 @@
         { "id": 57, "name": "Goiaba", "price": 5.00, "category": "Vitaminas" },
         { "id": 58, "name": "Graviola", "price": 7.00, "category": "Vitaminas" },
         { "id": 59, "name": "Maracujá", "price": 7.00, "category": "Vitaminas" }
-    
-    ];
+        ];
 
         let cart = [];
 
@@ -317,7 +316,7 @@
                     <img src="https://via.placeholder.com/150" alt="${item.name}" />
                     <h3>${item.name}</h3>
                     <p>R$ ${item.price.toFixed(2)}</p>
-                    <p class="ingredients">${item.ingredients.join(', ')}</p>
+                    <p class="ingredients">${item.ingredients ? item.ingredients.join(', ') : ''}</p>
                     <div class="item-controls">
                         <button onclick="changeQuantity(${item.id}, -1)">-</button>
                         <span id="quantity-${item.id}" class="quantity">0</span>
@@ -389,35 +388,34 @@
         }
 
         // Função para finalizar o pedido
-function finishOrder() {
-    const customerName = document.getElementById('customer-name').value;
-    if (customerName && cart.length > 0) {
-        let orderDetails = `*Comprovante de Pedido* 🛒\n\n`;
-        orderDetails += `*Cliente:* ${customerName}\n\n`;
-        orderDetails += `*Itens do Pedido:*\n`;
+        function finishOrder() {
+            const customerName = document.getElementById('customer-name').value;
+            if (customerName && cart.length > 0) {
+                let orderDetails = `*Comprovante de Pedido* 🛒\n\n`;
+                orderDetails += `*Cliente:* ${customerName}\n\n`;
+                orderDetails += `*Itens do Pedido:*\n`;
 
-        cart.forEach(item => {
-            if (item.quantity > 0) {
-                const itemName = menuItems.find(i => i.id === item.id).name;
-                orderDetails += `- ${itemName} x${item.quantity} - R$ ${(item.price * item.quantity).toFixed(2)}\n`;
+                cart.forEach(item => {
+                    if (item.quantity > 0) {
+                        const itemName = menuItems.find(i => i.id === item.id).name;
+                        orderDetails += `- ${itemName} x${item.quantity} - R$ ${(item.price * item.quantity).toFixed(2)}\n`;
+                    }
+                });
+
+                const total = cart.reduce((sum, item) => sum + item.quantity * item.price, 0);
+                orderDetails += `\n*Total: R$ ${total.toFixed(2)}*\n`;
+
+                // Salvar os detalhes do pedido no localStorage
+                localStorage.setItem('orderDetails', orderDetails);
+
+                // Redirecionar para a página de pagamento
+                window.location.href = 'payment.html';
+            } else {
+                alert("Por favor, insira seu nome e adicione itens ao carrinho.");
             }
-        });
+        }
 
-        const total = cart.reduce((sum, item) => sum + item.quantity * item.price, 0);
-        orderDetails += `\n*Total: R$ ${total.toFixed(2)}*\n`;
-
-        const whatsappUrl = `https://wa.me/558892787665?text=${encodeURIComponent(orderDetails)}`;
-        window.open(whatsappUrl, '_blank');
-        alert("Pedido finalizado! Redirecionando para o WhatsApp...");
-        cart = []; // Clear the cart after the order is sent
-        updateCart(); // Update cart UI
-    } else {
-        alert("Por favor, insira seu nome e adicione itens ao carrinho.");
-    }
-}
-
-
-        // Chama a função para exibir o menu quando a página carregar
+        // Chama a função para exibir os itens do menu quando a página carregar
         window.onload = displayMenu;
     </script>
 </body>
