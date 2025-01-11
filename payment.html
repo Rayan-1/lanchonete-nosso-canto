@@ -320,26 +320,29 @@
       let tipoCartao = '';
       let troco = '';
       let mensagem = '';
-  
+
+      // Recuperar os detalhes do pedido do localStorage
+      const orderDetails = localStorage.getItem('orderDetails') || '';
+
       if (tipo === 'pix') {
         const paymentTime = document.getElementById('payment-time').value;
         tipoPagamento = 'Pix';
-        mensagem = `*Tipo de Pagamento:* ${tipoPagamento}\n*Pagamento:* ${paymentTime === 'antes' ? 'Antes' : 'Depois'}\n\nAguarde o processamento do pagamento.`;
+        mensagem = `${orderDetails}\n*Tipo de Pagamento:* ${tipoPagamento}\n*Pagamento:* ${paymentTime === 'antes' ? 'Antes' : 'Depois'}\n\nAguarde o processamento do pagamento.`;
       } else if (tipo === 'card') {
         tipoCartao = document.getElementById('card-type').value;
         tipoPagamento = 'Cartão';
-        mensagem = `*Tipo de Pagamento:* ${tipoPagamento}\n*Tipo de Cartão:* ${tipoCartao}\n\nAguarde o processamento do pagamento.`;
+        mensagem = `${orderDetails}\n*Tipo de Pagamento:* ${tipoPagamento}\n*Tipo de Cartão:* ${tipoCartao}\n\nAguarde o processamento do pagamento.`;
       } else if (tipo === 'cash') {
         tipoPagamento = 'Dinheiro';
         const trocoOption = document.getElementById('troco-option').value;
         if (trocoOption === 'sim') {
           troco = document.getElementById('troco-valor').value;
-          mensagem = `*Tipo de Pagamento:* ${tipoPagamento}\n*Troco:* R$ ${troco}\n\nAguarde o processamento do pagamento.`;
+          mensagem = `${orderDetails}\n*Tipo de Pagamento:* ${tipoPagamento}\n*Troco:* R$ ${troco}\n\nAguarde o processamento do pagamento.`;
         } else {
-          mensagem = `*Tipo de Pagamento:* ${tipoPagamento}\n*Troco:* Não solicitado\n\nAguarde o processamento do pagamento.`;
+          mensagem = `${orderDetails}\n*Tipo de Pagamento:* ${tipoPagamento}\n*Troco:* Não solicitado\n\nAguarde o processamento do pagamento.`;
         }
       }
-  
+
       // Link do WhatsApp com a mensagem formatada
       const numeroWhatsApp = '5588992787665';
       const url = `https://wa.me/${numeroWhatsApp}?text=${encodeURIComponent(mensagem)}`;
