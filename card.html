@@ -290,7 +290,7 @@
         { "id": 47, "name": "Goiaba (Suco)", "price": 4.00, "category": "Sucos", "image": "https://tecnonoticias.com.br/blogs/casa-agro/wp-content/uploads/2022/03/Design-sem-nome-14-1024x683.png" },
         { "id": 48, "name": "Acerola (Suco)", "price": 4.00, "category": "Sucos", "image": "https://img.cybercook.com.br/receitas/383/suco-de-acerola.jpeg" },
         { "id": 49, "name": "Abacaxi (Suco)", "price": 4.00, "category": "Sucos", "image": "https://mulhermagradevez.com.br/wp-content/uploads/2018/11/suco-detox-com-abacaxi.jpg" },
-       { "id": 50, "name": "Graviola (Suco)", "price": 4.00, "category": "Sucos", "image": "https://www.saudedica.com.br/wp-content/uploads/2018/09/beneficios-do-suco-de-graviola.jpg" },
+        { "id": 50, "name": "Graviola (Suco)", "price": 4.00, "category": "Sucos", "image": "https://www.saudedica.com.br/wp-content/uploads/2018/09/beneficios-do-suco-de-graviola.jpg" },
         { "id": 51, "name": "Maracujá (Suco)", "price": 4.00, "category": "Sucos", "image": "https://img.freepik.com/fotos-premium/suco-de-maracuja-em-um-copo-com-frutas-sobre-a-mesa-de-madeira_92534-1702.jpg?w=2000" },
         { "id": 52, "name": "Maracujá (Vitamina)", "price": 7.00, "category": "Sucos", "image": "https://i.ytimg.com/vi/JpM1WBm-x1c/maxresdefault.jpg" },
         { "id": 53, "name": "Abacaxi (Vitamina)", "price": 5.00, "category": "Vitaminas", "image": "https://www.dicasonline.com/wp-content/uploads/vitamina-de-abacaxi-com-banana.jpg" },
@@ -299,7 +299,7 @@
         { "id": 56, "name": "Cajá Umbu (Vitamina)", "price": 6.00, "category": "Vitaminas", "image": "https://assets.unileversolutions.com/recipes-v2/215778.jpg?imwidth=900" },
         { "id": 57, "name": "Goiaba (Vitamina)", "price": 5.00, "category": "Vitaminas", "image": "https://i.ytimg.com/vi/hHFyt26nSJU/maxresdefault.jpg" },
         { "id": 58, "name": "Graviola (Vitamina)", "price": 7.00, "category": "Vitaminas", "image": "https://celeirodobrasil.com.br/wp-content/uploads/2018/03/vitamina-de-graviola-696x464.jpg" },
-        
+
         ];
 
         let cart = [];
@@ -385,6 +385,15 @@
         function toggleCart() {
             const cartContent = document.getElementById('cart-content');
             cartContent.style.display = cartContent.style.display === 'none' || cartContent.style.display === '' ? 'block' : 'none';
+            if (cartContent.style.display === 'block') {
+                scrollToCart();
+            }
+        }
+
+        // Função para rolar suavemente até o carrinho
+        function scrollToCart() {
+            const cartContent = document.getElementById('cart-content');
+            cartContent.scrollIntoView({ behavior: 'smooth', block: 'center' });
         }
 
         // Função para finalizar o pedido
