@@ -17,12 +17,12 @@ if [ $? -eq 0 ]; then
   echo "[OK] Security Group lanchonete-dev foi criado"
   
   # Validar inbound rule para o security group 'lanchonete-dev'
-  inbound_rule=$(aws ec2 describe-security-groups --group-ids $security_group_id --filters "Name=ip-permission.from-port,Values=3001" --filters "Name=ip-permission.cidr,Values=0.0.0.0/0" --output text)
+  inbound_rule=$(aws ec2 describe-security-groups --group-ids $security_group_id --filters "Name=ip-permission.from-port,Values=5002" --filters "Name=ip-permission.cidr,Values=0.0.0.0/0" --output text)
 
   if [ -n "$inbound_rule" ]; then
     echo " [OK] Regra de entrada está ok"
   else
-    echo " >[ERRO] Regra de entrada para a porta 3001 não encontrada ou não está aberta para o mundo todo. Reveja a aula do Henrylle"
+    echo " >[ERRO] Regra de entrada para a porta 5002 não encontrada ou não está aberta para o mundo todo. Reveja a aula do Henrylle"
   fi
 
   # Validar outbound rule para o security group 'lanchonete-dev'
@@ -31,7 +31,7 @@ if [ $? -eq 0 ]; then
   if [ -n "$outobund_rule" ]; then
     echo " [OK] Regra de saída está correta"
   else
-    echo " >[ERRO] Regra de saída para o mundo não encontrada. Reveja a aula do Henrylle"
+    echo " >[ERRO] Regra de saída para o mundo não encontrada."
   fi
 else
   echo ">[ERRO] Não achei o security group lanchonete-dev. Ele foi criado?"
