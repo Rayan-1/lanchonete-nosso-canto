@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bem-vindo - Lanchonete Nosso Canto</title>
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #FF5722;
+            background-image: url('https://i.ibb.co/zJ1cCsw/5.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            flex-direction: column;
+            text-align: center;
+        }
+
+        .container {
+            background: rgba(0, 0, 0, 0.7); /* Fundo escuro para destacar o conteúdo */
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+            width: 80%;
+            max-width: 600px;
+        }
+
+        .container h1 {
+            font-size: 3.5em;
+            color: #FFEB3B; /* Cor vibrante amarela */
+            text-shadow: 4px 4px 10px rgba(0, 0, 0, 0.8); /* Efeito de sombra para destacar o título */
+            letter-spacing: 3px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        /* Estilo do botão */
+        .button {
+            padding: 18px 35px;
+            background-color: #FF5722;
+            border: none;
+            border-radius: 5px;
+            color: white;
+            font-size: 20px;
+            text-transform: uppercase;
+            cursor: pointer;
+            text-decoration: none;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: background-color 0.3s, transform 0.3s;
+            margin-top: 30px;
+        }
+
+        .button:hover {
+            background-color: #FF9800;
+            transform: scale(1.1);
+        }
+
+        .gif-container {
+            margin: 30px 0;
+        }
+
+        .gif-container img {
+            max-width: 100%;
+            border-radius: 10px;
+        }
+
+        /* Aumento do ícone para garantir que o texto caiba */
+        .icon-container {
+            font-size: 3em; /* Aumentando o tamanho da fonte do ícone */
+            margin-bottom: 20px;
+        }
+
+        /* Responsividade */
+        @media (max-width: 768px) {
+            .container h1 {
+                font-size: 2.5em;
+            }
+
+            .button {
+                font-size: 18px;
+                padding: 15px 30px;
+            }
+
+            .icon-container {
+                font-size: 2.5em; /* Ajuste para telas menores */
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Seja Bem-Vindo</h1>
+        <!-- Exibindo o GIF de Patrick comendo -->
+        <div class="gif-container">
+            <img src="https://i.gifer.com/tjJ.gif" alt="Patrick comendo" />
+        </div>
+        <!-- Ícone maior -->
+        <div class="icon-container">
+            <i class="fas fa-utensils"></i> <!-- Substitua com o ícone que preferir -->
+        </div>
+        <!-- Botão para avançar -->
+        <a href="/main" class="button">Avançar</a>
+    </div>
+</body>
+</html>
+ (version 2.0)

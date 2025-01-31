@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Escolha o Método de Pagamento</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    body {
+        font-family: 'Roboto', sans-serif;
+        margin: 0;
+        padding: 0;
+        background-image: url('https://i.ibb.co/zJ1cCsw/5.png');
+        background-size: cover;
+        background-position: center;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+        color: white;
+        overflow: hidden;
+        box-sizing: border-box;
+    }
+    .container {
+      max-width: 600px;
+      margin: 30px auto;
+      padding: 20px;
+      background-color: #fff;
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+      overflow-y: auto;
+      max-height: 80vh;
+    }
+    h1 {
+      font-size: 24px;
+      text-align: center;
+      color: #333;
+      margin-bottom: 20px;
+    }
+    .payment-options {
+      display: flex;
+      justify-content: space-around;
+      margin-bottom: 20px;
+    }
+
+    .back-button {
+        position: fixed;
+        top: 10px;
+        left: 10px;
+        background-color: #000; /* Preto */
+        color: #fff; /* Texto branco */
+        padding: 5px 10px; /* Tamanho pequeno */
+        font-size: 12px; /* Fonte menor */
+        border: none;
+        border-radius: 3px; /* Cantos levemente arredondados */
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        z-index: 1100;
+        box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2); /* Sutil sombra para destaque */
+        width: auto; /* Ajusta a largura do botão */
+    }
+    
+    .back-button:hover {
+        background-color: #333; /* Cinza escuro ao passar o mouse */
+    }
+       
+    .payment-option {
+      text-align: center;
+      padding: 15px;
+      border-radius: 10px;
+      background-color: #f9f9f9;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      cursor: pointer;
+      transition: all 0.3s ease;
+      flex: 1;
+      margin: 0 10px;
+    }
+    .payment-option:hover {
+      background-color: #e9e9e9;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+    }
+    .payment-option i {
+      font-size: 50px;
+      color: #333;
+      margin-bottom: 10px;
+    }
+    .payment-option p {
+      font-size: 16px;
+      font-weight: bold;
+      color: #333;
+    }
+    .payment-method {
+      display: none;
+    }
+    .payment-method.active {
+      display: block;
+    }
+    select, button {
+      width: 100%;
+      padding: 12px;
+      margin-top: 10px;
+      font-size: 16px;
+      border-radius: 8px;
+      border: 1px solid #ddd;
+      background-color: #f9f9f9;
+    }
+    select:focus, button:focus {
+      outline: none;
+      border-color: #25D366;
+    }
+    button {
+      background-color: #25D366;
+      color: white;
+      cursor: pointer;
+      font-weight: bold;
+      border: none;
+      transition: background-color 0.3s ease;
+    }
+    button:hover {
+      background-color: #128C7E;
+    }
+    .section-title {
+      font-size: 20px;
+      font-weight: bold;
+      color: #333;
+      margin-bottom: 10px;
+    }
+    .instructions {
+      font-size: 14px;
+      color: #555;
+      margin-top: 5px;
+      line-height: 1.5;
+    }
+    .feedback {
+      color: red;
+      margin-top: 10px;
+      font-size: 14px;
+      font-weight: bold;
+    }
+    #troco-value {
+      display: none;
+      margin-top: 10px;
+    }
+    #troco-value input {
+      width: 80%;
+      margin-top: 10px;
+      padding: 10px;
+      border-radius: 8px;
+      border: 1px solid #ddd;
+      font-size: 16px;
+    }
+    .money-icon {
+      font-size: 20px;
+      margin-right: 10px;
+      color: green;
+    }
+    .qr-code {
+      display: none;
+      text-align: center;
+      margin-top: 20px;
+    }
+    .qr-code img {
+      width: 150px;
+      height: 150px;
+    }
+    .pix-info {
+      display: none;
+      text-align: center;
+      margin-top: 20px;
+    }
+    .pix-info h1 {
+      font-size: 18px;
+      font-weight: bold;
+      color: #333;
+    }
+    .pix-info h2 {
+      font-size: 16px;
+      color: #555;
+    }
+    .pix-info h3 {
+      font-size: 14px;
+      color: #888;
+    }
+    @media (max-width: 768px) {
+      .payment-options {
+        flex-direction: column;
+      }
+      .payment-option {
+        margin: 10px 0;
+      }
+    }
+  </style>
+</head>
+<body>
+    <button class="back-button" onclick="window.history.back();">Voltar</button>
+
+  <div class="container">
+    <h1>Escolha o Método de Pagamento</h1>
+    <div class="payment-options">
+      <!-- Opção de pagamento Pix -->
+      <div class="payment-option" onclick="selecionarMetodoPagamento('pix')">
+        <i class="fa-brands fa-pix"></i>
+        <p>Pix</p>
+      </div>
+
+      <!-- Opção de pagamento Cartão -->
+      <div class="payment-option" onclick="selecionarMetodoPagamento('card')">
+        <i class="fa-solid fa-credit-card"></i>
+        <p>Cartão</p>
+      </div>
+
+      <!-- Opção de pagamento Dinheiro -->
+      <div class="payment-option" onclick="selecionarMetodoPagamento('cash')">
+        <i class="fa-solid fa-dollar-sign"></i>
+        <p>Dinheiro</p>
+      </div>
+    </div>
+     
+    <!-- Seção Pix -->
+    <div id="pix-section" class="payment-method">
+      <h2 class="section-title">Pagamento via Pix</h2>
+      <label for="payment-time">Você deseja pagar antes ou depois de receber o pedido?</label>
+      <select id="payment-time" onchange="mostrarMensagemPix()">
+        <option value="antes">Antes de Receber</option>
+        <option value="depois">Depois de Receber</option>
+      </select>
+      <!-- Feedback imediato para o "Antes de Receber" -->
+      <div id="mensagem-pix" class="feedback" style="display: none;">
+        Informamos que, caso o pagamento seja realizado antes, deverá enviar o comprovante do pagamento via WhatsApp para termos controle.
+      </div>
+      
+      <!-- Exibição do nome do recebedor, chave Pix e banco (aparece somente se 'antes' for escolhido) -->
+      <div id="pix-info" class="pix-info">
+        <h1>Chave Pix: 88992787665</h1>
+        <h2>Nome do Recebedor: Rayanne de Souza Freitas</h2>
+        <h3>Banco: Nubank</h3>
+      </div>
+
+      <!-- Substituindo o QR Code gerado dinamicamente por uma imagem estática -->
+      <div id="qr-code-pix" class="qr-code">
+        <img src="qrcode.png" alt="QR Code Pix">  <!-- Alterado para a imagem estática -->
+      </div>
+
+      <button onclick="confirmarPagamento('pix')">Confirmar Pagamento via Pix</button>
+    </div>
+
+    <!-- Seção Cartão -->
+    <div id="card-section" class="payment-method">
+      <h2 class="section-title">Pagamento com Cartão</h2>
+      <label for="card-type">Escolha o tipo de pagamento:</label>
+      <select id="card-type">
+        <option value="credito">Crédito</option>
+        <option value="debito">Débito</option>
+      </select>
+      <button onclick="confirmarPagamento('card')">Confirmar Pagamento</button>
+    </div>
+
+    <!-- Seção Dinheiro -->
+    <div id="cash-section" class="payment-method">
+      <h2 class="section-title">Pagamento em Dinheiro</h2>
+      <label for="troco">Você precisa de troco?</label>
+      <select id="troco-option" onchange="verificarTroco()">
+        <option value="nao">Não</option>
+        <option value="sim">Sim</option>
+      </select>
+
+      <!-- Se o cliente escolher "Sim" para troco -->
+      <div id="troco-value" style="display: none;">
+        <label for="troco-valor">Qual valor de troco?</label>
+        <input type="number" id="troco-valor" placeholder="Digite o valor do troco" />
+      </div>
+
+      <button onclick="confirmarPagamento('cash')">Confirmar Pagamento</button>
+    </div>
+  </div>
+
+  <script>
+    // Mostrar o método de pagamento selecionado
+    function selecionarMetodoPagamento(metodo) {
+      document.getElementById('pix-section').classList.remove('active');
+      document.getElementById('card-section').classList.remove('active');
+      document.getElementById('cash-section').classList.remove('active');
+      document.getElementById(metodo + '-section').classList.add('active');
+    }
+
+    // Mostrar a mensagem para Pix caso "Antes de Receber" seja escolhido
+    function mostrarMensagemPix() {
+      const paymentTime = document.getElementById('payment-time').value;
+      const mensagemPix = document.getElementById('mensagem-pix');
+      const pixInfo = document.getElementById('pix-info');
+      const qrCode = document.getElementById('qr-code-pix');
+
+      if (paymentTime === 'antes') {
+        mensagemPix.style.display = 'block';
+        pixInfo.style.display = 'block';
+        qrCode.style.display = 'block';
+      } else {
+        mensagemPix.style.display = 'none';
+        pixInfo.style.display = 'none';
+        qrCode.style.display = 'none';
+      }
+    }
+
+    // Verificar se precisa de troco para Dinheiro
+    function verificarTroco() {
+      const trocoOption = document.getElementById('troco-option').value;
+      const trocoValue = document.getElementById('troco-value');
+
+      if (trocoOption === 'sim') {
+        trocoValue.style.display = 'block';
+      } else {
+        trocoValue.style.display = 'none';
+      }
+    }
+
+    // Confirmar pagamento e gerar link WhatsApp com os dados formatados
+    function confirmarPagamento(tipo) {
+      let tipoPagamento = '';
+      let tipoCartao = '';
+      let troco = '';
+      let mensagem = '';
+
+      // Recuperar os detalhes do pedido do localStorage
+      const orderDetails = localStorage.getItem('orderDetails') || '';
+
+      if (tipo === 'pix') {
+        const paymentTime = document.getElementById('payment-time').value;
+        tipoPagamento = 'Pix';
+        mensagem = `${orderDetails}\n*Tipo de Pagamento:* ${tipoPagamento}\n*Pagamento:* ${paymentTime === 'antes' ? 'Antes' : 'Depois'}\n\nAguarde o processamento do pagamento.`;
+      } else if (tipo === 'card') {
+        tipoCartao = document.getElementById('card-type').value;
+        tipoPagamento = 'Cartão';
+        mensagem = `${orderDetails}\n*Tipo de Pagamento:* ${tipoPagamento}\n*Tipo de Cartão:* ${tipoCartao}\n\nAguarde o processamento do pagamento.`;
+      } else if (tipo === 'cash') {
+        tipoPagamento = 'Dinheiro';
+        const trocoOption = document.getElementById('troco-option').value;
+        if (trocoOption === 'sim') {
+          troco = document.getElementById('troco-valor').value;
+          mensagem = `${orderDetails}\n*Tipo de Pagamento:* ${tipoPagamento}\n*Troco:* R$ ${troco}\n\nAguarde o processamento do pagamento.`;
+        } else {
+          mensagem = `${orderDetails}\n*Tipo de Pagamento:* ${tipoPagamento}\n*Troco:* Não solicitado\n\nAguarde o processamento do pagamento.`;
+        }
+      }
+
+      // Link do WhatsApp com a mensagem formatada
+      const numeroWhatsApp = '5588992787665';
+      const url = `https://wa.me/${numeroWhatsApp}?text=${encodeURIComponent(mensagem)}`;
+      window.open(url, '_blank');
+    }
+  </script>
+</body>
+</html>
